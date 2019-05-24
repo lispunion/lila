@@ -7,11 +7,44 @@
 #include <string.h>
 #include <unistd.h>
 
+#define FLAG_DOUBLE_DASH 1
+
 struct token {
     int type;
     char *string;
 };
 
+struct implementation {
+    const char *name;
+    const char *command;
+    size_t flags;
+};
+
+static const struct implementation chibi = {
+    .name = "chibi",
+    .command = "chibi-scheme",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation clisp = {
+    .name = "clisp",
+    .command = "clisp",
+    .flags = 0,
+};
+
+static const struct implementation gauche = {
+    .name = "gauche",
+    .command = "gosh",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation newlisp = {
+    .name = "newlisp",
+    .command = "newlisp",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation *implementation;
 static const char progname[] = "lila";
 static char *script;
 static char buf[4096];
@@ -55,6 +88,7 @@ token_from_type(int type)
         diemem();
     }
     tok->type = type;
+    // fprintf(stderr, "token %c\n", type);
     return tok;
 }
 
@@ -63,14 +97,12 @@ token_from_mark_to_pos(int type)
 {
     struct token *tok;
 
-    if (!(tok = calloc(1, sizeof(*tok)))) {
-        diemem();
-    }
-    tok->type = type;
+    tok = token_from_type(type);
     if (!(tok->string = calloc(1, pos - mark + 1))) {
         diemem();
     }
     memcpy(tok->string, buf + mark, pos - mark);
+    // fprintf(stderr, "string %s\n", tok->string);
     return tok;
 }
 
@@ -157,6 +189,7 @@ whitespace_char_p(int c)
 const char symbol_chars[] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                             "abcdefghijklmnopqrstuvwxyz"
+                            "#.|" // TODO
                             "-_";
 
 static int
@@ -172,10 +205,25 @@ horizontal_char_p(int c)
 }
 
 static void
-skip_whitespace(void)
+skip_rest_of_line(void)
 {
-    while (read_ascii_char_if(whitespace_char_p))
+    while (read_ascii_char_if(horizontal_char_p))
         ;
+}
+
+static void
+skip_whitespace_and_comments(void)
+{
+    for (;;) {
+        if (read_ascii_char_if(whitespace_char_p)) {
+            continue;
+        }
+        if (read_the_ascii_char(';')) {
+            skip_rest_of_line();
+            continue;
+        }
+        break;
+    }
 }
 
 static struct token *
@@ -210,7 +258,7 @@ read_token(void)
 {
     int c;
 
-    skip_whitespace();
+    skip_whitespace_and_comments();
     c = read_the_ascii_char(-1);
     if (c) {
         return 0;
@@ -236,13 +284,6 @@ read_token(void)
 }
 
 static void
-skip_rest_of_line(void)
-{
-    while (read_ascii_char_if(horizontal_char_p))
-        ;
-}
-
-static void
 skip_shebang_line(void)
 {
     if (!read_the_ascii_char('#'))
@@ -253,20 +294,147 @@ skip_shebang_line(void)
 }
 
 static void
+skip_rest_of_list(struct token *tok)
+{
+    for (;;) {
+        if (!tok) {
+            die("unterminated list");
+        }
+        if (tok->type == '(') {
+            skip_rest_of_list(read_token());
+        }
+        if (tok->type == ')') {
+            break;
+        }
+        tok = read_token();
+    }
+}
+
+static int
+try_implementation(const char *name)
+{
+    if (!strcmp(name, "chibi")) {
+        implementation = &chibi;
+        return 1;
+    }
+    if (!strcmp(name, "clisp")) {
+        implementation = &clisp;
+        return 1;
+    }
+    if (!strcmp(name, "gauche")) {
+        implementation = &gauche;
+        return 1;
+    }
+    if (!strcmp(name, "newlisp")) {
+        implementation = &newlisp;
+        return 1;
+    }
+    return 0;
+}
+
+static void
+read_implementation(void)
+{
+    struct token *tok;
+
+    for (;;) {
+        tok = read_token();
+        if (tok->type == ')') {
+            die("no supported implementation is listed");
+            break;
+        } else if (tok->type == 's') {
+            if (try_implementation(tok->string)) {
+                skip_rest_of_list(read_token());
+                break;
+            }
+        } else {
+            die("weird stuff in implementation list");
+        }
+    }
+}
+
+static void
+read_declare_file_list(void)
+{
+    struct token *tok;
+
+    tok = read_token();
+    if (tok->type == 's') {
+        if (!strcmp(tok->string, "implementation")) {
+            read_implementation();
+            return;
+        }
+    }
+    skip_rest_of_list(tok);
+}
+
+static void
+read_declare_file(void)
+{
+    struct token *tok;
+
+    for (;;) {
+        tok = read_token();
+        if (tok->type == '(') {
+            read_declare_file_list();
+        } else if (tok->type == ')') {
+            break;
+        } else {
+            die("weird stuff right under declare-file");
+        }
+    }
+}
+
+static int
+read_toplevel_list(void)
+{
+    struct token *tok;
+
+    tok = read_token();
+    if (tok->type == 's') {
+        if (!strcmp(tok->string, "declare-file")) {
+            read_declare_file();
+            return 1;
+        }
+    }
+    skip_rest_of_list(tok);
+    return 0;
+}
+
+static void
 parse(void)
 {
     struct token *tok;
 
     skip_shebang_line();
-    while ((tok = read_token())) {
-        switch (tok->type) {
-        case '(': printf("\nlist starts\n"); break;
-        case ')': printf("list ends\n\n"); break;
-        case '"': printf("string %s\n", tok->string); break;
-        case 's': printf("symbol %s\n", tok->string); break;
-        default: printf("???\n"); break;
+    for (;;) {
+        tok = read_token();
+        if (!tok) {
+            break;
+        }
+        if (tok->type == '(') {
+            read_toplevel_list();
+        } else if (tok->type == ')') {
+            die("Stray closing paren");
         }
     }
+}
+
+static void
+run(void)
+{
+    const char *argv[4];
+    const char **ins;
+
+    ins = argv;
+    *ins++ = implementation->command;
+    if (implementation->flags & FLAG_DOUBLE_DASH) {
+        *ins++ = "--";
+    }
+    *ins++ = script;
+    *ins++ = 0;
+    // fprintf(stderr, "running %s\n", implementation->command);
+    execvp(argv[0], (char **)argv);
 }
 
 int
@@ -276,8 +444,12 @@ main(int argc, char **argv)
         usage();
     }
     script = argv[1];
-    printf("%s\n", script);
+    // printf("%s\n", script);
     slurp_file();
     parse();
+    if (!implementation) {
+        die("no suitable implementation found");
+    }
+    run();
     return 0;
 }
