@@ -7,6 +7,11 @@
 #include <string.h>
 #include <unistd.h>
 
+struct token {
+    int type;
+    char *string;
+};
+
 static const char progname[] = "lila";
 static char *script;
 static char buf[4096];
@@ -29,10 +34,44 @@ die(const char *msg)
 }
 
 static void
+diemem(void)
+{
+    die("out of memory");
+}
+
+static void
 diesys(const char *msg)
 {
     fprintf(stderr, "%s: error: %s: %s\n", progname, msg, strerror(errno));
     exit(50);
+}
+
+struct token *
+token_from_type(int type)
+{
+    struct token *tok;
+
+    if (!(tok = calloc(1, sizeof(*tok)))) {
+        diemem();
+    }
+    tok->type = type;
+    return tok;
+}
+
+struct token *
+token_from_mark_to_pos(int type)
+{
+    struct token *tok;
+
+    if (!(tok = calloc(1, sizeof(*tok)))) {
+        diemem();
+    }
+    tok->type = type;
+    if (!(tok->string = calloc(1, pos - mark + 1))) {
+        diemem();
+    }
+    memcpy(tok->string, buf + mark, pos - mark);
+    return tok;
 }
 
 static void
@@ -139,27 +178,34 @@ skip_whitespace(void)
         ;
 }
 
-static int
+static struct token *
 read_symbol(int c)
 {
-    while ((c = read_ascii_char_if(symbol_char_p)))
-        ;
-    return 's';
+    mark = pos - 1;
+    while ((c = read_ascii_char_if(symbol_char_p))) {
+    }
+    return token_from_mark_to_pos('s');
 }
 
-static int
+static struct token *
 read_string(void)
 {
+    struct token *tok;
+
+    mark = pos;
     while (!read_the_ascii_char('"')) {
         read_the_ascii_char('\\');
         if (!read_ascii_char_if(horizontal_char_p)) {
             die("bad char in string");
         }
     }
-    return 't';
+    pos--;
+    tok = token_from_mark_to_pos('"');
+    pos++;
+    return tok;
 }
 
-static int
+static struct token *
 read_token(void)
 {
     int c;
@@ -171,11 +217,11 @@ read_token(void)
     }
     c = read_the_ascii_char('(');
     if (c) {
-        return c;
+        return token_from_type(c);
     }
     c = read_the_ascii_char(')');
     if (c) {
-        return c;
+        return token_from_type(c);
     }
     c = read_the_ascii_char('"');
     if (c) {
@@ -209,11 +255,17 @@ skip_shebang_line(void)
 static void
 parse(void)
 {
-    int c;
+    struct token *tok;
 
     skip_shebang_line();
-    while ((c = read_token())) {
-        printf("%c\n", c);
+    while ((tok = read_token())) {
+        switch (tok->type) {
+        case '(': printf("\nlist starts\n"); break;
+        case ')': printf("list ends\n\n"); break;
+        case '"': printf("string %s\n", tok->string); break;
+        case 's': printf("symbol %s\n", tok->string); break;
+        default: printf("???\n"); break;
+        }
     }
 }
 
