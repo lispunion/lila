@@ -1,0 +1,12 @@
+#! /usr/bin/env lila
+
+#;
+(declare-file
+  (language scheme r7rs)
+  (implementation chibi gauche))
+
+(import (scheme base)
+        (scheme write))
+
+(display "Hello world")
+(newline)

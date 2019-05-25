@@ -17,12 +17,30 @@ struct token {
 struct implementation {
     const char *name;
     const char *command;
+    const char *imageflag;
+    const char *scriptflag;
     size_t flags;
+};
+
+static const struct implementation ccl = {
+    .name = "ccl",
+    .command = "ccl64",
+    .imageflag = "--image-name",
+    .scriptflag = "--load",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation chez = {
+    .name = "chez",
+    .command = "chez",
+    .scriptflag = "--program",
+    .flags = FLAG_DOUBLE_DASH,
 };
 
 static const struct implementation chibi = {
     .name = "chibi",
     .command = "chibi-scheme",
+    .imageflag = "-i",
     .flags = FLAG_DOUBLE_DASH,
 };
 
@@ -42,6 +60,24 @@ static const struct implementation newlisp = {
     .name = "newlisp",
     .command = "newlisp",
     .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation sbcl = {
+    .name = "sbcl",
+    .command = "sbcl",
+    .imageflag = "--core",
+    .scriptflag = "--script",
+    .flags = 0,
+};
+
+static const struct implementation *implementations[] = {
+    &ccl,
+    &chez,
+    &chibi,
+    &clisp,
+    &gauche,
+    &newlisp,
+    &sbcl,
 };
 
 static const struct implementation *implementation;
@@ -189,7 +225,7 @@ whitespace_char_p(int c)
 const char symbol_chars[] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                             "abcdefghijklmnopqrstuvwxyz"
-                            "#.|" // TODO
+                            "&#.|" // TODO
                             "-_";
 
 static int
@@ -313,21 +349,14 @@ skip_rest_of_list(struct token *tok)
 static int
 try_implementation(const char *name)
 {
-    if (!strcmp(name, "chibi")) {
-        implementation = &chibi;
-        return 1;
-    }
-    if (!strcmp(name, "clisp")) {
-        implementation = &clisp;
-        return 1;
-    }
-    if (!strcmp(name, "gauche")) {
-        implementation = &gauche;
-        return 1;
-    }
-    if (!strcmp(name, "newlisp")) {
-        implementation = &newlisp;
-        return 1;
+    const struct implementation **impls;
+    const struct implementation *impl;
+
+    for (impls = implementations; (impl = *impls); impls++) {
+        if (!strcmp(impl->name, name)) {
+            implementation = impl;
+            return 1;
+        }
     }
     return 0;
 }
@@ -423,18 +452,26 @@ parse(void)
 static void
 run(void)
 {
-    const char *argv[4];
+    const char *argv[5];
     const char **ins;
 
     ins = argv;
     *ins++ = implementation->command;
+    if (implementation->scriptflag) {
+        *ins++ = implementation->scriptflag;
+        *ins++ = script;
+    }
     if (implementation->flags & FLAG_DOUBLE_DASH) {
         *ins++ = "--";
     }
-    *ins++ = script;
+    if (!implementation->scriptflag) {
+        *ins++ = script;
+    }
     *ins++ = 0;
     // fprintf(stderr, "running %s\n", implementation->command);
     execvp(argv[0], (char **)argv);
+    diesys("cannot exec interpreter");
+    exit(126);
 }
 
 int

@@ -1,0 +1,10 @@
+#! /usr/bin/env lila
+
+(defmacro declare-file (&body body)
+  (declare (ignore body)))
+
+(declare-file
+  (language common-lisp)
+  (implementation sbcl ccl clisp))
+
+(write-line "Hello world")

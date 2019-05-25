@@ -1,0 +1,14 @@
+#! /usr/bin/env lila
+
+(import (scheme base)
+        (scheme write))
+
+(define-syntax declare-file
+  (syntax-rules () ((_ rest ...) #f)))
+
+(declare-file
+  (language scheme r7rs)
+  (implementation gauche chibi))
+
+(display "Hello world")
+(newline)

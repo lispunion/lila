@@ -1,0 +1,13 @@
+#! /usr/bin/env lila
+
+(import (rnrs))
+
+(define-syntax declare-file
+  (syntax-rules () ((_ rest ...) #f)))
+
+(declare-file
+  (language scheme r6rs)
+  (implementation chez))
+
+(display "Hello world")
+(newline)

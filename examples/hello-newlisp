@@ -1,0 +1,10 @@
+#! /usr/bin/env lila
+
+(define-macro (declare-file ...) nil)
+
+(declare-file
+  (language newlisp)
+  (implementation newlisp))
+
+(print "Hello world\n")
+(exit)
