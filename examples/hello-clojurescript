@@ -1,0 +1,8 @@
+#! /usr/bin/env lila
+
+#_
+(declare-file
+  (language clojurescript)
+  (implementation lumo planck cljsc))
+
+(println "Hello world")

@@ -47,6 +47,17 @@ static const struct implementation chibi = {
 static const struct implementation clisp = {
     .name = "clisp",
     .command = "clisp",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation cljsc = {
+    .name = "cljsc",
+    .command = "cljsc",
+};
+
+static const struct implementation clojure = {
+    .name = "clojure",
+    .command = "clojure",
     .flags = 0,
 };
 
@@ -56,9 +67,21 @@ static const struct implementation gauche = {
     .flags = FLAG_DOUBLE_DASH,
 };
 
+static const struct implementation lumo = {
+    .name = "lumo",
+    .command = "lumo",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
 static const struct implementation newlisp = {
     .name = "newlisp",
     .command = "newlisp",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation planck = {
+    .name = "planck",
+    .command = "planck",
     .flags = FLAG_DOUBLE_DASH,
 };
 
@@ -75,8 +98,12 @@ static const struct implementation *implementations[] = {
     &chez,
     &chibi,
     &clisp,
+    &cljsc,
+    &clojure,
     &gauche,
+    &lumo,
     &newlisp,
+    &planck,
     &sbcl,
 };
 

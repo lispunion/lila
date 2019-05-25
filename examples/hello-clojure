@@ -1,0 +1,8 @@
+#! /usr/bin/env lila
+
+#_
+(declare-file
+  (language clojure)
+  (implementation clojure))
+
+(println "Hello world")
