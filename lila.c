@@ -32,7 +32,6 @@ static const struct implementation chicken = {
 static const struct implementation clisp = {
     .name = "clisp",
     .command = "clisp",
-    .flags = FLAG_DOUBLE_DASH,
 };
 
 static const struct implementation cljsc = {
