@@ -7,4 +7,5 @@ cd "$b"
 echo "Entering directory '$PWD'"
 set -x
 ${CC:-clang} ${CFLAGS:--Wall -Wextra -pedantic -std=gnu99 -Og -g} \
-	-o lila ../lila_unix.c
+	-o lila \
+	../lila.c ../lila_read.c ../lila_print.c ../lila_examine.c ../lila_unix.c
