@@ -26,7 +26,7 @@ examine_implementation_list(uint32_t list)
 {
     const struct implementation *impl;
 
-    for (list = value_d(list); list; list = value_d(list)) {
+    for (; list; list = value_d(list)) {
         if (value_type(value_a(list)) == TYPE_SYMBOL) {
             impl = examine_implementation(bytes + value_a(value_a(list)));
             if (impl && !implementation) {
