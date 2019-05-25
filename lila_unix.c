@@ -44,6 +44,11 @@ static const struct implementation chibi = {
     .flags = FLAG_DOUBLE_DASH,
 };
 
+static const struct implementation chicken = {
+    .name = "chicken",
+    .command = "csi",
+};
+
 static const struct implementation clisp = {
     .name = "clisp",
     .command = "clisp",
@@ -65,6 +70,11 @@ static const struct implementation gauche = {
     .name = "gauche",
     .command = "gosh",
     .flags = FLAG_DOUBLE_DASH,
+};
+
+static const struct implementation guile = {
+    .name = "guile",
+    .command = "guile",
 };
 
 static const struct implementation lumo = {
@@ -97,10 +107,12 @@ static const struct implementation *implementations[] = {
     &ccl,
     &chez,
     &chibi,
+    &chicken,
     &clisp,
     &cljsc,
     &clojure,
     &gauche,
+    &guile,
     &lumo,
     &newlisp,
     &planck,
@@ -252,7 +264,7 @@ whitespace_char_p(int c)
 const char symbol_chars[] = "0123456789"
                             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                             "abcdefghijklmnopqrstuvwxyz"
-                            "&#.|" // TODO
+                            "&#.|!" // TODO
                             "-_";
 
 static int
