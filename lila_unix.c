@@ -154,7 +154,7 @@ diesys(const char *msg)
     exit(50);
 }
 
-struct token *
+static struct token *
 token_from_type(int type)
 {
     struct token *tok;
@@ -167,7 +167,7 @@ token_from_type(int type)
     return tok;
 }
 
-struct token *
+static struct token *
 token_from_mark_to_pos(int type)
 {
     struct token *tok;
@@ -261,11 +261,11 @@ whitespace_char_p(int c)
     return ((c == ' ') || (c == '\t') || (c == '\n') || (c == '\r'));
 }
 
-const char symbol_chars[] = "0123456789"
-                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                            "abcdefghijklmnopqrstuvwxyz"
-                            "&#.|!" // TODO
-                            "-_";
+static const char symbol_chars[] = "0123456789"
+                                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                   "abcdefghijklmnopqrstuvwxyz"
+                                   "&#.|!" // TODO
+                                   "-_";
 
 static int
 symbol_char_p(int c)
