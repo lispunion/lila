@@ -1,8 +1,8 @@
-#define TYPE_STRING 1      // string  <firstbyte> <bytelimit>
-#define TYPE_SYMBOL 2      // symbol  <firstbyte> <bytelimit>
-#define TYPE_PAIR 3        // ( pair <car idx> <cdr idx>
-#define TYPE_PAIR_SQUARE 4 // [ pair <car idx> <cdr idx>
-#define TYPE_PAIR_CURLY 5  // { pair <car idx> <cdr idx>
+#define TYPE_STRING 1      // a=<byte offset> d=<byte count>
+#define TYPE_SYMBOL 2      // a=<byte offset> d=<byte count>
+#define TYPE_PAIR 3        // a=<car index>   d=<cdr index>
+#define TYPE_PAIR_SQUARE 4 // a=<car index>   d=<cdr index>
+#define TYPE_PAIR_CURLY 5  // a=<car index>   d=<cdr index>
 
 #define TOPLEVEL 8
 
