@@ -1,0 +1,10 @@
+#! /usr/bin/env lila
+!#
+
+(defmacro declare-file (#!rest body) nil)
+
+(declare-file
+  (language rep)
+  (implementation rep))
+
+(princ "Hello world\n")

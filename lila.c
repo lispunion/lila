@@ -88,6 +88,11 @@ static const struct implementation racket = {
     .flags = FLAG_DOUBLE_DASH,
 };
 
+static const struct implementation rep = {
+    .name = "rep",
+    .command = "rep",
+};
+
 static const struct implementation sbcl = {
     .name = "sbcl",
     .command = "sbcl",
@@ -111,6 +116,7 @@ const struct implementation *implementations[] = {
     &newlisp,
     &planck,
     &racket,
+    &rep,
     &sbcl,
 };
 

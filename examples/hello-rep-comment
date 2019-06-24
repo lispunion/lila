@@ -1,0 +1,7 @@
+#! /usr/bin/env lila
+(declare-file
+  (language rep)
+  (implementation rep))
+!#
+
+(princ "Hello world\n")
