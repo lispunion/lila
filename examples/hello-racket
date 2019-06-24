@@ -1,0 +1,12 @@
+#! /usr/bin/env lila
+
+#lang racket/base
+
+(define-syntax declare-file
+  (syntax-rules () ((_ rest ...) (void))))
+
+(declare-file
+  (language racket base)
+  (implementation racket))
+
+(displayln "Hello world")

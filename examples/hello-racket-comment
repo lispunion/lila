@@ -1,0 +1,10 @@
+#! /usr/bin/env lila
+
+#lang racket/base
+
+#;
+(declare-file
+  (language racket base)
+  (implementation racket))
+
+(displayln "Hello world")

@@ -75,6 +75,12 @@ static const struct implementation planck = {
     .flags = FLAG_DOUBLE_DASH,
 };
 
+static const struct implementation racket = {
+    .name = "racket",
+    .command = "racket",
+    .flags = FLAG_DOUBLE_DASH,
+};
+
 static const struct implementation sbcl = {
     .name = "sbcl",
     .command = "sbcl",
@@ -96,6 +102,7 @@ const struct implementation *implementations[] = {
     &lumo,
     &newlisp,
     &planck,
+    &racket,
     &sbcl,
 };
 
