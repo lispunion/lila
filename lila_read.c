@@ -111,8 +111,8 @@ whitespace_char_p(int c)
 static const char symbol_chars[] = "0123456789"
                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                    "abcdefghijklmnopqrstuvwxyz"
-                                   "&#.|!" // TODO
-                                   "-_";
+                                   "&#.:/|!" // TODO
+                                   "+-_";
 
 static int
 symbol_char_p(int c)
