@@ -46,6 +46,12 @@ static const struct implementation clojure = {
     .flags = 0,
 };
 
+static const struct implementation emacs = {
+    .name = "emacs",
+    .command = "emacs",
+    .scriptflag = "--script",
+};
+
 static const struct implementation gauche = {
     .name = "gauche",
     .command = "gosh",
@@ -98,6 +104,7 @@ const struct implementation *implementations[] = {
     &clisp,
     &cljsc,
     &clojure,
+    &emacs,
     &gauche,
     &guile,
     &lumo,

@@ -1,0 +1,9 @@
+#! /usr/bin/env lila
+
+(defmacro declare-file (&rest _rest) nil)
+
+(declare-file
+  (language emacs-lisp)
+  (implementation emacs))
+
+(princ "Hello world")
