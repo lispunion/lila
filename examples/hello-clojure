@@ -1,0 +1,9 @@
+#! /usr/bin/env lila
+
+(defmacro declare-file [& _] nil)
+
+(declare-file
+  (language clojure)
+  (implementation clojure))
+
+(println "Hello world")
