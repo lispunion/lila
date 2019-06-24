@@ -1,0 +1,12 @@
+#! /usr/bin/env lila
+!#
+
+(define-syntax declare-file
+  (syntax-rules () ((_ rest ...) #f)))
+
+(declare-file
+  (language scheme r5rs)
+  (implementation guile))
+
+(display "Hello world")
+(newline)
