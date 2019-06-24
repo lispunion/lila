@@ -55,6 +55,7 @@ static const struct implementation gauche = {
 static const struct implementation guile = {
     .name = "guile",
     .command = "guile",
+    .scriptflag = "--no-auto-compile",
 };
 
 static const struct implementation lumo = {
