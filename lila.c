@@ -43,13 +43,13 @@ static const struct implementation cljsc = {
 static const struct implementation clojure = {
     .name = "clojure",
     .command = "clojure",
-    .flags = 0,
 };
 
 static const struct implementation emacs = {
     .name = "emacs",
     .command = "emacs",
     .scriptflag = "--script",
+    .flags = FLAG_DOUBLE_DASH,
 };
 
 static const struct implementation gauche = {
@@ -62,6 +62,7 @@ static const struct implementation guile = {
     .name = "guile",
     .command = "guile",
     .scriptflag = "--no-auto-compile",
+    .flags = FLAG_DOUBLE_DASH,
 };
 
 static const struct implementation lumo = {
@@ -97,7 +98,7 @@ static const struct implementation sbcl = {
     .name = "sbcl",
     .command = "sbcl",
     .scriptflag = "--script",
-    .flags = 0,
+    .flags = FLAG_DOUBLE_DASH,
 };
 
 const struct implementation *implementations[] = {
