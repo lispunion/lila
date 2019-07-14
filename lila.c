@@ -28,6 +28,7 @@ static const struct implementation chibi = {
 static const struct implementation chicken = {
     .name = "chicken",
     .command = "csi",
+    .scriptflag = "-s",
 };
 
 static const struct implementation clisp = {
