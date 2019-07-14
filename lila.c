@@ -6,7 +6,6 @@
 static const struct implementation ccl = {
     .name = "ccl",
     .command = "ccl64",
-    .imageflag = "--image-name",
     .scriptflag = "--load",
     .flags = FLAG_DOUBLE_DASH,
 };
@@ -21,7 +20,6 @@ static const struct implementation chez = {
 static const struct implementation chibi = {
     .name = "chibi",
     .command = "chibi-scheme",
-    .imageflag = "-i",
     .flags = FLAG_DOUBLE_DASH,
 };
 
@@ -98,7 +96,6 @@ static const struct implementation rep = {
 static const struct implementation sbcl = {
     .name = "sbcl",
     .command = "sbcl",
-    .imageflag = "--core",
     .scriptflag = "--script",
     .flags = 0,
 };

@@ -13,7 +13,6 @@
 struct implementation {
     const char *name;
     const char *command;
-    const char *imageflag;
     const char *scriptflag;
     size_t flags;
 };
