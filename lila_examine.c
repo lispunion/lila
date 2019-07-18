@@ -10,7 +10,7 @@ examine_implementation(const char *name)
     const struct implementation **impls;
     const struct implementation *impl;
 
-    if (verbosity >= 2) {
+    if (vflags >= 1) {
         fprintf(stderr, "%s: file lists implementation %s\n", progname, name);
     }
     for (impls = implementations; (impl = *impls); impls++) {
@@ -31,7 +31,7 @@ examine_implementation_list(uint32_t list)
             impl = examine_implementation(bytes + value_a(value_a(list)));
             if (impl && !implementation) {
                 implementation = impl;
-                if (verbosity >= 2) {
+                if (vflags >= 1) {
                     fprintf(
                         stderr, "%s: choosing that implementation\n", progname);
                 }

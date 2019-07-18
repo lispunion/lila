@@ -84,7 +84,7 @@ run(void)
         *ins++ = script;
     }
     *ins++ = 0;
-    if (verbosity >= 2) {
+    if (vflags >= 1) {
         for (ins = argv; *ins; ins++) {
             fprintf(stderr, "%s: arg: %s\n", progname, *ins);
         }
@@ -101,12 +101,12 @@ main(int argc, char **argv)
         usage();
     }
     script = argv[1];
-    if (verbosity >= 2) {
+    if (vflags >= 1) {
         fprintf(stderr, "%s: script: %s\n", progname, script);
     }
     slurp_file();
     read_all();
-    if (verbosity >= 2) {
+    if (vflags >= 1) {
         print_all();
     }
     examine_all();

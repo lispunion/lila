@@ -27,7 +27,7 @@ extern uint32_t values[MAXVALUES];
 extern size_t nvalue;
 extern size_t nbyte;
 extern size_t bytepos;
-extern unsigned int verbosity;
+extern int vflags;
 
 void die(const char *msg);
 void read_all(void);
