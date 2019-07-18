@@ -109,7 +109,6 @@ main(int argc, char **argv)
     if (vflags >= 1) {
         print_all();
     }
-    examine_all();
     run();
     return 0;
 }

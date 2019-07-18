@@ -264,6 +264,11 @@ read_all(void)
     skip_shebang_line();
     while ((index = read_value()) != MAXVALUES) {
         set_value_flag(index, TOPLEVEL);
+        if (value_type(index) == TYPE_PAIR) {
+            null_terminate_strings();
+            if (examine_toplevel_form(index)) {
+                break;
+            }
+        }
     }
-    null_terminate_strings();
 }

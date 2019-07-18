@@ -39,4 +39,4 @@ uint32_t value_a(uint32_t index);
 uint32_t value_d(uint32_t index);
 int value_the_symbol_p(uint32_t index, const char *name);
 
-void examine_all(void);
+int examine_toplevel_form(uint32_t index);

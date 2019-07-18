@@ -58,18 +58,18 @@ examine_declare_file(uint32_t list)
     }
 }
 
-void
-examine_all(void)
+int
+examine_toplevel_form(uint32_t index)
 {
-    uint32_t index;
-
-    for (index = 0; index < nvalue; index++) {
-        if (values[index] & TOPLEVEL) {
-            if (value_type(index) == TYPE_PAIR) {
-                if (value_the_symbol_p(value_a(index), "declare-file")) {
-                    examine_declare_file(value_d(index));
-                }
-            }
-        }
+    if (!(values[index] & TOPLEVEL)) {
+        return 0;
     }
+    if (value_type(index) != TYPE_PAIR) {
+        return 0;
+    }
+    if (!value_the_symbol_p(value_a(index), "declare-file")) {
+        return 0;
+    }
+    examine_declare_file(value_d(index));
+    return 1;
 }
