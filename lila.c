@@ -135,4 +135,4 @@ uint32_t values[MAXVALUES];
 size_t nvalue = 1; // First value is null.
 size_t nbyte;
 size_t bytepos;
-unsigned int verbosity = 3; // 0=quiet, 1=normal, 2=-v, 3=-vv
+unsigned int verbosity = 1; // 0=quiet, 1=normal, 2=-v, 3=-vv
