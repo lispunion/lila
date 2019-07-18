@@ -3,6 +3,6 @@
 #_
 (declare-file
   (language clojure)
-  (implementation clojure))
+  (implementations clojure))
 
 (println "Hello world")

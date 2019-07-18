@@ -4,6 +4,6 @@
 
 (declare-file
   (language emacs-lisp)
-  (implementation emacs))
+  (implementations emacs))
 
 (princ "Hello world")

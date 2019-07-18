@@ -1,7 +1,7 @@
 #! /usr/bin/env lila
 (declare-file
   (language scheme r5rs)
-  (implementation guile))
+  (implementations guile))
 !#
 
 (display "Hello world")

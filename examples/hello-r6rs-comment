@@ -3,7 +3,7 @@
 #;
 (declare-file
   (language scheme r6rs)
-  (implementation chez))
+  (implementations chez))
 
 (import (rnrs))
 

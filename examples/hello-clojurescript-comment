@@ -3,6 +3,6 @@
 #_
 (declare-file
   (language clojurescript)
-  (implementation lumo planck cljsc))
+  (implementations lumo planck cljsc))
 
 (println "Hello world")

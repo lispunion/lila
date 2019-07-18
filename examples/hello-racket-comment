@@ -5,6 +5,6 @@
 #;
 (declare-file
   (language racket base)
-  (implementation racket))
+  (implementations racket))
 
 (displayln "Hello world")

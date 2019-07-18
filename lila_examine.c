@@ -43,7 +43,7 @@ examine_implementation_list(uint32_t list)
 static void
 examine_declare_file_sublist(uint32_t list)
 {
-    if (value_the_symbol_p(value_a(list), "implementation")) {
+    if (value_the_symbol_p(value_a(list), "implementations")) {
         examine_implementation_list(value_d(list));
     }
 }

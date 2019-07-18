@@ -4,7 +4,7 @@
 
 (declare-file
   (language newlisp)
-  (implementation newlisp))
+  (implementations newlisp))
 
 (print "Hello world\n")
 (exit)

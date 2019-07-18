@@ -3,6 +3,6 @@
 #+(or)
 (declare-file
   (language common-lisp)
-  (implementation sbcl ccl clisp))
+  (implementations sbcl ccl clisp))
 
 (write-line "Hello world")

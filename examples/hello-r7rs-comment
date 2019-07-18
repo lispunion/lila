@@ -3,7 +3,7 @@
 #;
 (declare-file
   (language scheme r7rs)
-  (implementation chibi gauche))
+  (implementations chibi gauche))
 
 (import (scheme base)
         (scheme write))

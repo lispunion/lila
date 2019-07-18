@@ -1,7 +1,7 @@
 #! /usr/bin/env lila
 (declare-file
   (language rep)
-  (implementation rep))
+  (implementations rep))
 !#
 
 (princ "Hello world\n")

@@ -7,7 +7,7 @@
 
 (declare-file
   (language scheme r6rs)
-  (implementation chez))
+  (implementations chez))
 
 (display "Hello world")
 (newline)

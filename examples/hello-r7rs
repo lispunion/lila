@@ -8,7 +8,7 @@
 
 (declare-file
   (language scheme r7rs)
-  (implementation chicken gauche chibi))
+  (implementations chicken gauche chibi))
 
 (display "Hello world")
 (newline)
