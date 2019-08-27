@@ -1,0 +1,9 @@
+= Lila - Lisp Launcher
+
+image::https://api.cirrus-ci.com/github/lispunion/lila.svg[Build Status, link=https://cirrus-ci.com/github/lispunion/lila]
+
+Lila runs a script written in any Lisp dialect, using any implementation of
+that dialect on any OS.
+
+Use `#! /usr/bin/env lila` as the first line of the file. Lila leverages
+S-expressions to provide a clean and extensible syntax for the details.
