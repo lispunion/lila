@@ -1,11 +1,31 @@
 #!/bin/sh
 set -eu
+os="$(uname | tr A-Z- a-z_)"
+default_cc=gcc
+default_cflags="-Og -g -Wall -Werror -Wextra -pedantic -std=gnu99"
+default_lflags=""
+case "$(uname)" in
+Darwin) default_cc=clang ;;
+DragonFly) ;;
+FreeBSD) default_cc=clang ;;
+Haiku) default_cflags="-g -Wall -Werror" ;;
+Linux) default_lflags="-lrt" ;;
+NetBSD) default_lflags="-lrt" ;;
+OpenBSD) default_cc=clang ;;
+SunOS) ;;
+*)
+    echo "Unknown operating system: $os" >&2
+    exit 1
+    ;;
+esac
+CC="${CC:-$default_cc}"
+CFLAGS="${CFLAGS:-$default_cflags}"
+LFLAGS="${LFLAGS:-$default_lflags}"
+builddir="build-$os-$(uname -m | tr A-Z- a-z_)-$(basename "$CC")"
 cd "$(dirname "$0")"/..
-b="build-$(uname | tr A-Z- a-z_)-$(uname -m | tr A-Z- a-z_)"
-mkdir -p "$b"
-cd "$b"
+mkdir -p "$builddir"
+cd "$builddir"
 echo "Entering directory '$PWD'"
 set -x
-${CC:-clang} ${CFLAGS:--Wall -Wextra -pedantic -std=gnu99 -Og -g} \
-	-o lila \
-	../lila.c ../lila_read.c ../lila_print.c ../lila_examine.c ../lila_unix.c
+$CC $CFLAGS -o lila \
+    ../lila.c ../lila_read.c ../lila_print.c ../lila_examine.c ../lila_unix.c
