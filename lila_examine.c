@@ -32,8 +32,8 @@ examine_implementation_list(uint32_t list)
             if (impl && !implementation) {
                 implementation = impl;
                 if (vflags >= 1) {
-                    fprintf(
-                        stderr, "%s: choosing that implementation\n", progname);
+                    fprintf(stderr, "%s: choosing that implementation\n",
+                        progname);
                 }
             }
         }

@@ -12,8 +12,8 @@ static uint32_t
 make_value(uint32_t flags, uint32_t a, uint32_t d)
 {
     if (vflags >= 2) {
-        fprintf(stderr, "%s: value %3d := %d %3d %3d\n", progname, (int)nvalue,
-            (int)flags, (int)a, (int)d);
+        fprintf(stderr, "%s: value %3d := %d %3d %3d\n", progname,
+            (int)nvalue, (int)flags, (int)a, (int)d);
     }
     if (nvalue >= MAXVALUES) {
         die("too many values");
