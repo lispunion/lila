@@ -65,6 +65,11 @@ static const struct implementation guile = {
     .flags = FLAG_DOUBLE_DASH,
 };
 
+static const struct implementation kawa = {
+    .name = "kawa",
+    .command = "kawa",
+};
+
 static const struct implementation lumo = {
     .name = "lumo",
     .command = "lumo",
@@ -112,6 +117,7 @@ const struct implementation *implementations[] = {
     &emacs,
     &gauche,
     &guile,
+    &kawa,
     &lumo,
     &newlisp,
     &planck,
