@@ -29,14 +29,23 @@ extern size_t nbyte;
 extern size_t bytepos;
 extern int vflags;
 
-void die(const char *msg);
-void read_all(void);
-void print_all(void);
-void print_value_string(uint32_t index);
+void
+die(const char *msg);
+void
+read_all(void);
+void
+print_all(void);
+void
+print_value_string(uint32_t index);
 
-uint32_t value_type(uint32_t index);
-uint32_t value_a(uint32_t index);
-uint32_t value_d(uint32_t index);
-int value_the_symbol_p(uint32_t index, const char *name);
+uint32_t
+value_type(uint32_t index);
+uint32_t
+value_a(uint32_t index);
+uint32_t
+value_d(uint32_t index);
+int
+value_the_symbol_p(uint32_t index, const char *name);
 
-int examine_toplevel_form(uint32_t index);
+int
+examine_toplevel_form(uint32_t index);
