@@ -3,7 +3,7 @@ set -eu
 os="$(uname | tr A-Z- a-z_)"
 default_cc=gcc
 default_cflags="-Og -g -Wall -Werror -Wextra -pedantic -std=gnu99"
-default_lflags=""
+default_lflags="-static"
 case "$(uname)" in
 Darwin) default_cc=clang ;;
 DragonFly) ;;
