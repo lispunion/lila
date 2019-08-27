@@ -9,8 +9,8 @@ Darwin) default_cc=clang ;;
 DragonFly) ;;
 FreeBSD) default_cc=clang ;;
 Haiku) default_cflags="-g -Wall -Werror" ;;
-Linux) default_lflags="-lrt" ;;
-NetBSD) default_lflags="-lrt" ;;
+Linux) default_lflags="" ;;
+NetBSD) default_lflags="" ;;
 OpenBSD) default_cc=clang ;;
 SunOS) ;;
 *)
