@@ -1,4 +1,4 @@
-= Lila - Lisp Launcher
+= Lila - Lisp launcher
 
 image::https://api.cirrus-ci.com/github/lispunion/lila.svg[Build Status, link=https://cirrus-ci.com/github/lispunion/lila]
 
