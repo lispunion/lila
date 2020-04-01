@@ -20,7 +20,7 @@ struct implementation {
 extern const struct implementation *implementations[];
 extern const struct implementation *implementation;
 extern const char progname[];
-extern char *script;
+extern const char *script;
 
 extern char bytes[4096];
 extern uint32_t values[MAXVALUES];

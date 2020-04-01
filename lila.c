@@ -128,7 +128,7 @@ const struct implementation *implementations[] = {
 
 const struct implementation *implementation;
 const char progname[] = "lila";
-char *script;
+const char *script;
 
 // S-expressions are read using two pages of static memory.
 // The first page is up to 4096 bytes from the start of the source file.
